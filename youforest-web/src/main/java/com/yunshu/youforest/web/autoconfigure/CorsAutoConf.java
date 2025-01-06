@@ -16,7 +16,7 @@ import org.springframework.web.filter.CorsFilter;
  **/
 @EnableConfigurationProperties(CorsProperties.class)
 @ConditionalOnProperty(prefix = CorsProperties.PREFIX,name = "enabled",matchIfMissing = true)
-public class CorsAutoConfiguration {
+public class CorsAutoConf {
     /**
      * 跨域过滤器
      * @return

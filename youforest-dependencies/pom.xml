@@ -115,52 +115,6 @@
                 <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
                 <version>${knife4j-openapi3.version}</version>
             </dependency>
-            <!--opensabre 组件-->
-            <dependency>
-                <groupId>io.github.opensabre</groupId>
-                <artifactId>opensabre-web</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.github.opensabre</groupId>
-                <artifactId>opensabre-starter-boot</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.github.opensabre</groupId>
-                <artifactId>opensabre-starter-register</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.github.opensabre</groupId>
-                <artifactId>opensabre-starter-rpc</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.github.opensabre</groupId>
-                <artifactId>opensabre-starter-config</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.github.opensabre</groupId>
-                <artifactId>opensabre-starter-persistence</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.github.opensabre</groupId>
-                <artifactId>opensabre-starter-cache</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.github.opensabre</groupId>
-                <artifactId>opensabre-starter-eda</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.github.ulisesbocchio</groupId>
-                <artifactId>jasypt-spring-boot-starter</artifactId>
-                <version>${jasypt-springboot.version}</version>
-            </dependency>
             <!--使用 lombok 简化 Java 代码-->
             <dependency>
                 <groupId>org.projectlombok</groupId>
@@ -207,12 +161,6 @@
                 <artifactId>junit-jupiter</artifactId>
                 <version>${junit-jupiter.version}</version>
             </dependency>
-            <!--opensabre测试组件-->
-            <dependency>
-                <groupId>io.github.opensabre</groupId>
-                <artifactId>opensabre-test</artifactId>
-                <version>${revision}</version>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -256,14 +204,14 @@
                             </goals>
                         </execution>
                     </executions>
-                    <configuration>
-                        <repository>${dockerhub.repository}/${project.name}</repository>
-                        <tag>${project.version}</tag>
-                        <buildArgs>
-                            <JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
-                        </buildArgs>
-                        <dockerfile>src/main/docker/Dockerfile</dockerfile>
-                    </configuration>
+<!--                    <configuration>-->
+<!--                        <repository>${dockerhub.repository}/${project.name}</repository>-->
+<!--                        <tag>${project.version}</tag>-->
+<!--                        <buildArgs>-->
+<!--                            <JAR_FILE>${project.build.finalName}.jar</JAR_FILE>-->
+<!--                        </buildArgs>-->
+<!--                        <dockerfile>src/main/docker/Dockerfile</dockerfile>-->
+<!--                    </configuration>-->
                 </plugin>
                 <!--测试案例-->
                 <plugin>

@@ -1,4 +1,4 @@
-package com.yunshu.youforest.web.model;
+package com.yunshu.youforest.web.model2;
 
 /**
  * description: 错误码规范定义

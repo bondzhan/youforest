@@ -1,94 +1,213 @@
 package com.yunshu.youforest.web.model;
 
-import com.yunshu.youforest.web.model.page.PageResponse;
-import com.yunshu.youforest.web.model.page.PageList;
+import cn.hutool.core.date.DatePattern;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-import java.beans.Transient;
 import java.io.Serializable;
-import java.util.List;
+import java.time.LocalDateTime;
 
 /**
- * @Description TODO
- * @Author lucoo
- * @Date 2021/6/23 18:28
- **/
+ * @Author Bond
+ * @Description 统一API返回结果格式
+ * @Date: 2025/1/6 14:21
+ */
 @Getter
 @Setter
-@Accessors(chain = true)
+@Accessors
+@Schema(description = "统一API返回结果格式")
 public class ApiResult<T> implements Serializable {
     private static final long serialVersionUID = 1L;
-    /*** 响应成功码 */
-    private Boolean success = false;
-    private String code;
-    private String msg;
-    private String traceId;
+
+    /**
+     * 处理成功的常量代码
+     */
+    public static final String SUCCESSFUL_CODE = "000000";
+    /**
+     * 处理成功的默认提示信息
+     */
+    public static final String SUCCESSFUL_MESG = "处理成功";
+    /**
+     * 统一报文中code代码，标明异常类型
+     */
+    @Schema(title = "处理结果code", description = "处理结果，000000为成功", requiredMode = Schema.RequiredMode.REQUIRED, example="000000")
+    private final String code;
+    /**
+     * 统一报文中提示信息
+     */
+    @Schema(title = "处理结果描述信息", description = "对code的详细说明和描述", example = "成功")
+    private final String msg;
+
+    /**
+     * 统一报文中报文生成时间
+     */
+    @Schema(title = "请求结果生成时间戳", requiredMode = Schema.RequiredMode.REQUIRED, example = "2025-01-01T20:30:00.123Z")
+    @JsonFormat(pattern = DatePattern.UTC_MS_PATTERN)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    private final LocalDateTime time;
+    /**
+     * 统一报文中数据部分，支持泛型
+     */
+    @Schema(title = "处理结果数据信息", description = "可能为字符串、数组、对象等", requiredMode = Schema.RequiredMode.REQUIRED, example = "深圳市")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private T data;
 
+    @Schema(title = "请求追踪ID", description = "请求追踪ID", example = "1234567890")
+    private String traceId;
+
+    /**
+     * 默认构建方法，无参时默认为成功报文
+     */
+    public ApiResult() {
+        this.code = SUCCESSFUL_CODE;
+        this.msg = SUCCESSFUL_MESG;
+        this.time = LocalDateTime.now();
+    }
+
+    /**
+     * 通过ErrorType构建Result
+     *
+     * @param errorType 错误类型
+     */
+    public ApiResult(ApiErrorType errorType) {
+        this.code = errorType.getCode();
+        this.msg = errorType.getMesg();
+        this.time = LocalDateTime.now();
+    }
+
+    /**
+     * 通过ErrorType和data数据构建Result
+     *
+     * @param errorType 错误类型
+     * @param data      错误数据
+     */
+    public ApiResult(ApiErrorType errorType, T data) {
+        this(errorType);
+        this.data = data;
+    }
+
+    /**
+     * 内部使用，用于构造成功的结果
+     *
+     * @param code 错误码
+     * @param msg 错误信息
+     * @param data 错误数据对象
+     */
+    private ApiResult(String code, String msg, T data) {
+        this.code = code;
+        this.msg = msg;
+        this.data = data;
+        this.time = LocalDateTime.now();
+    }
+
+    /**
+     * 快速创建成功结果并返回结果数据
+     *
+     * @param data 错误数据对象
+     * @return Result
+     */
+    public static <T> ApiResult<T>  success(T data) {
+        return new ApiResult<T>(SUCCESSFUL_CODE, SUCCESSFUL_MESG, data);
+    }
+
+    /**
+     * 快速创建成功结果
+     *
+     * @return Result
+     */
     public static <T> ApiResult<T> success() {
-        ApiResult<T> apiResult = ApiResultBuilderManager.build(YouforestErrorCode.SUCCESS.getModularCode(), YouforestErrorCode.SUCCESS.getMsg());
-        apiResult.setSuccess(true);
-        return apiResult;
+        return success(null);
     }
 
-    public static <T> ApiResult<T> success(T data) {
-        ApiResult<T> response = success();
-        response.setData(data);
-        return response;
+    /**
+     * 系统异常类没有返回数据
+     *
+     * @return Result
+     */
+    public static <T> ApiResult<T> fail() {
+        return new ApiResult(SystemErrorType.SYSTEM_ERROR);
     }
 
-    public static <T, R extends PageResponse<T>> ApiResult<R> successPage(List<T> data) {
-        ApiResult<R> response = success();
-        if (data instanceof PageList) {
-            response.setData((R) new PageResponse((PageList) data));
-        }
-        return response;
+    /**
+     * 系统异常类并返回结果数据
+     *
+     * @param data 错误数据对象
+     * @return Result
+     */
+    public static  <T> ApiResult<T> fail(T data) {
+        return new ApiResult<T>(SystemErrorType.SYSTEM_ERROR, data);
     }
 
-    public static <T> ApiResult<T> error(String code, String message, Object... params) {
-        ApiResult<T> apiResult = ApiResultBuilderManager.build(code, message, params);
-        apiResult.setSuccess(false);
-        return apiResult;
+    /**
+     * 系统异常类没有返回数据
+     *
+     * @param baseException 异常类参数
+     * @return Result
+     */
+    public static  <T> ApiResult<T> fail(SystemException baseException) {
+        return fail(baseException, null);
     }
 
-    public static <T> ApiResult<T> error() {
-        return error(YouforestErrorCode.SYSTEM_ERROR);
+    /**
+     * 系统异常类并返回结果数据
+     *
+     * @param data          错误数据对象
+     * @param baseException 异常对象
+     * @return Result
+     */
+    public static  <T> ApiResult<T> fail(SystemException baseException, T data) {
+        return new ApiResult<T>(baseException.getErrorType(), data);
     }
 
-    public static <T> ApiResult<T> error(String message) {
-        return error(YouforestErrorCode.SYSTEM_ERROR.getCode(), message);
+    /**
+     * 系统异常类并返回结果数据
+     *
+     * @param errorType 错误类型
+     * @param data      错误数据
+     * @return Result
+     */
+    public static  <T> ApiResult<T> fail(ApiErrorType errorType, T data) {
+        return new ApiResult<T>(errorType, data);
     }
 
-    public static <T> ApiResult<T> error(ApiErrorCode error, Object... params) {
-        return error(error.getCode(), error.getMsg(), params);
+    /**
+     * 系统异常类并返回结果数据
+     *
+     * @param errorType 错误类型
+     * @return Result
+     */
+    public static  <T> ApiResult<T> fail(ApiErrorType errorType) {
+        return ApiResult.fail(errorType, null);
     }
 
-    public static <T> ApiResult<T> error(String message, ApiErrorCode error, Object... params) {
-        return error(error.getCode(), message, params);
+    /**
+     * 成功code=000000
+     *
+     * @return true/false
+     */
+    @JsonIgnore
+    public boolean isSuccess() {
+        return SUCCESSFUL_CODE.equals(this.code);
     }
 
-    @Transient
-    public Boolean isOk() {
-        if (success == null) {
-            return false;
-        }
-        return success;
+    /**
+     * 失败
+     *
+     * @return true/false
+     */
+    @JsonIgnore
+    public boolean isFail() {
+        return !isSuccess();
     }
 
-    @Transient
-    public Boolean isNotOk() {
-        return !this.isOk();
-    }
-
-    @Transient
-    public Boolean isSucceed() {
-        return success != null && success && data != null;
-    }
-
-    @Transient
-    public Boolean isNotSucceed() {
-        return !isSucceed();
-    }
 }

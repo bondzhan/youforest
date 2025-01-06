@@ -23,7 +23,7 @@
             <dependency>
                 <groupId>com.yunshu</groupId>
                 <artifactId>youforest-dependencies</artifactId>
-                <version>0.1.0</version>
+                <version>${revision}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -31,8 +31,12 @@
     </dependencyManagement>
 
 
-
     <dependencies>
+        <!-- 加载bootstrap.yml文件 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bootstrap</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -41,6 +45,11 @@
         <dependency>
             <groupId>io.swagger.core.v3</groupId>
             <artifactId>swagger-annotations-jakarta</artifactId>
+        </dependency>
+        <!--springdoc - restfull API文档-->
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
         </dependency>
         <!--使用 lombok 简化 Java 代码-->
         <dependency>

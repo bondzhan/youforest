@@ -1,4 +1,4 @@
-package com.yunshu.youforest.web.model.page;
+package com.yunshu.youforest.web.model2.page;
 
 import java.util.HashMap;
 import java.util.LinkedList;
