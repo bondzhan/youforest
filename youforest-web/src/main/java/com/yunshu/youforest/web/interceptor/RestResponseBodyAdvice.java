@@ -28,13 +28,14 @@ public class RestResponseBodyAdvice implements ResponseBodyAdvice<Object> {
     @Override
     public boolean supports(@NotNull MethodParameter returnType,
                             @NotNull Class<? extends HttpMessageConverter<?>> converterType) {
-        // 不需要进行统一返回的报文
         Class<?> returnTypeContainingClass = returnType.getContainingClass();
+        // 排除swagger的资源
+        boolean hasSwaggerResource = !returnTypeContainingClass.getName().contains("org.springdoc");
         boolean hasResponseBody = AnnotatedElementUtils.hasAnnotation(returnTypeContainingClass, ResponseBody.class) ||
                 returnType.hasMethodAnnotation(ResponseBody.class);
         boolean hasRestController = AnnotatedElementUtils.hasAnnotation(returnTypeContainingClass, RestController.class) ||
                 returnType.hasMethodAnnotation(RestController.class);
-        return hasResponseBody && hasRestController;
+        return hasResponseBody && hasRestController && hasSwaggerResource;
     }
 
     @SneakyThrows
@@ -46,7 +47,7 @@ public class RestResponseBodyAdvice implements ResponseBodyAdvice<Object> {
                                   @NotNull ServerHttpRequest request,
                                   @NotNull ServerHttpResponse response) {
         // body为ApiResult类型，直接返回
-        if (body instanceof ApiResult<?>) {
+        if (body instanceof ApiResult) {
             return body;
         }
         // 如果是String，将Result转为json string

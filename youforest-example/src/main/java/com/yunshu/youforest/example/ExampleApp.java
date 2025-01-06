@@ -1,18 +1,20 @@
 package com.yunshu.youforest.example;
 
-import com.yunshu.youforest.web.model2.ApiResult;
+import com.yunshu.youforest.web.model.ApiResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @Author Bond
  * @Date 2025/1/6
- * @Description TODO
+ * @Description
  */
 @SpringBootApplication
+@ComponentScan(basePackages = {"com.yunshu.youforest.web", "com.yunshu.youforest.example"})
 @RestController
 @Slf4j
 public class ExampleApp {
