@@ -11,7 +11,9 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 
 /**
- * Swagger配置类
+ * @Author Bond
+ * @Description 自动配置类，用于初始化 Swagger 相关配置
+ * @Date 2025/1/6
  */
 @AutoConfiguration
 @EnableConfigurationProperties(SwaggerInfo.class)

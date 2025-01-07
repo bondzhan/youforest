@@ -2,6 +2,7 @@ package com.yunshu.youforest.example;
 
 import com.yunshu.youforest.web.model.ApiResult;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
@@ -23,15 +24,20 @@ public class ExampleApp {
 
     }
 
+    @Autowired
+    ExampleService exampleService;
+
     @RequestMapping("/test")
     public ApiResult<String> test() {
         log.info("test success");
+        exampleService.test();
         return ApiResult.success("test");
     }
 
     @RequestMapping("/testzero")
     public ApiResult<String> testzero() {
         log.info("testzero success");
+        exampleService.testzero();
         int a = 1 / 0;
         return ApiResult.success("test");
     }

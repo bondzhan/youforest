@@ -62,7 +62,7 @@ public class ApiResult<T> implements Serializable {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private T data;
 
-    @Schema(title = "请求追踪ID", description = "请求追踪ID", example = "1234567890")
+    @Schema(title = "请求追踪ID", description = "一个串", example = "1234567890")
     private String traceId;
 
     /**

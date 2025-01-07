@@ -1,2 +1,24 @@
 server:
   port: 8082
+
+spring:
+  application:
+    name: youforest-example
+
+#==============日志===============#
+#logging:
+#  level:
+#    com.yunshu.youforest: info
+#  logback:
+#    rollingpolicy:
+#      max-file-size: 1GB
+#  file:
+#    path: logs
+#  pattern:
+#    level: '%5p [${spring.application.name},%X{traceId:-},%X{spanId:-}]'
+#
+#management:
+#  tracing:
+#    enabled: true
+#    sampling:
+#      probability: 1.0  # 100% 请求进行采样
