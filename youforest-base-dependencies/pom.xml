@@ -39,6 +39,7 @@
         <feign-interceptors>1.1.2</feign-interceptors>
         <guava.version>31.1-jre</guava.version>
         <jasypt-springboot.version>3.0.5</jasypt-springboot.version>
+        <micrometer.version>1.14.2</micrometer.version>
         <!--  测试   -->
         <junit-jupiter.version>5.9.1</junit-jupiter.version>
         <spring-test.version>5.3.31</spring-test.version>
@@ -72,6 +73,14 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <!--  micrometer -->
+<!--            <dependency>-->
+<!--                <groupId>io.micrometer</groupId>-->
+<!--                <artifactId>micrometer-bom</artifactId>-->
+<!--                <version>${micrometer.version}</version>-->
+<!--                <type>pom</type>-->
+<!--                <scope>import</scope>-->
+<!--            </dependency>-->
             <!-- hutool工具 -->
             <dependency>
                 <groupId>cn.hutool</groupId>

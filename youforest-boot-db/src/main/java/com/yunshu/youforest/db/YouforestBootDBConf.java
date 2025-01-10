@@ -20,6 +20,7 @@ public class YouforestBootDBConf {
 
     @PostConstruct
     public void init(){
-        log.info("Youforest-boot-db init success!");
+        log.info("Youforest-boot-db version " + YouforestBootDBConf.class.getPackage().getImplementationVersion() + " init success!");
+
     }
 }

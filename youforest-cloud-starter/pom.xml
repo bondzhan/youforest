@@ -29,4 +29,26 @@
         </dependencies>
     </dependencyManagement>
 
+    <dependencies>
+        <!-- 加载bootstrap.yml文件 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bootstrap</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter</artifactId>
+        </dependency>
+        <!--配置中心-->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.yunshu</groupId>
+            <artifactId>youforest-boot-starter</artifactId>
+            <version>${revision}</version>
+        </dependency>
+    </dependencies>
+
 </project>
