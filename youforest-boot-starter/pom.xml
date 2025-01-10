@@ -17,6 +17,19 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.yunshu</groupId>
+                <artifactId>youforest-base-dependencies</artifactId>
+                <version>${revision}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
 
         <dependency>
@@ -25,12 +38,6 @@
             <version>${revision}</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.yunshu</groupId>
-            <artifactId>youforest-base-dependencies</artifactId>
-            <version>${revision}</version>
-            <type>pom</type>
-        </dependency>
     </dependencies>
 
 </project>

@@ -36,13 +36,7 @@
             <groupId>com.yunshu</groupId>
             <artifactId>youforest-boot-web</artifactId>
             <version>${revision}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.yunshu</groupId>
-            <artifactId>youforest-base-dependencies</artifactId>
-            <version>${revision}</version>
-            <type>pom</type>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>

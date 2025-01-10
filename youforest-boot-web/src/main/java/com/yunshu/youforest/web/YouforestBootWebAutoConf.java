@@ -23,17 +23,25 @@ import org.springframework.context.annotation.PropertySource;
         com.yunshu.youforest.web.autoconfigure.SwaggerAutoConf.class
 })
 public class YouforestBootWebAutoConf {
+
+    private final Tracer tracer;
+
+    // 通过构造函数注入 Tracer 实例
+    public YouforestBootWebAutoConf(Tracer tracer) {
+        this.tracer = tracer;
+    }
     @PostConstruct
     public void init() {
+        TraceIdUtil.setTracer(tracer);
         log.info("Youforest-web version " + YouforestBootWebAutoConf.class.getPackage().getImplementationVersion() + " init success!");
     }
 
-    @Bean
-    public CommandLineRunner setTracer(Tracer tracer) {
-        return args -> {
-            // 设置全局Tracer，供TraceIdUtil使用
-            TraceIdUtil.setTracer(tracer);
-            log.info("Micrometer Tracer set success!");
-        };
-    }
+//    @Bean
+//    public CommandLineRunner setTracer(Tracer tracer) {
+//        return args -> {
+//            // 设置全局Tracer，供TraceIdUtil使用
+//            TraceIdUtil.setTracer(tracer);
+//            log.info("Micrometer Tracer set success!");
+//        };
+//    }
 }

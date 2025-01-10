@@ -28,3 +28,5 @@ replay_pid*
 /youforest-base-dependencies/pom-xml-flattened
 /youforest-example/pom-xml-flattened
 /youforest-boot-web/pom-xml-flattened
+/youforest-boot-starter/pom-xml-flattened
+/youforest-boot-starter/target/
