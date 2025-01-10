@@ -11,9 +11,11 @@
 
 
     <modules>
-        <module>youforest-web</module>
-        <module>youforest-dependencies</module>
-        <module>youforest-example</module>
+        <module>youforest-boot-web</module>
+        <module>youforest-base-dependencies</module>
+        <module>youforest-boot-db</module>
+        <module>youforest-boot-starter</module>
+        <module>youforest-cloud-starter</module>
     </modules>
 
     <properties>
@@ -27,9 +29,14 @@
         <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
         <nexus-staging-maven-plugin.version>1.7.0</nexus-staging-maven-plugin.version>
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
-        <revision>0.1.0</revision>
+        <revision>0.1.1</revision>
     </properties>
     <pluginRepositories>
+        <pluginRepository>
+            <id>rdc</id>
+            <name>Youforest Repository</name>
+            <url>https://packages.aliyun.com/6670f23dfd3acd0ce9014364/maven/2476786-release-x8o41d</url>
+        </pluginRepository>
         <pluginRepository>
             <id>repository.spring.release</id>
             <name>Spring GA Repository</name>
@@ -124,8 +131,8 @@
                     <version>${nexus-staging-maven-plugin.version}</version>
                     <extensions>true</extensions>
                     <configuration>
-                        <serverId>ossrh</serverId>
-                        <nexusUrl>https://s01.oss.sonatype.org</nexusUrl>
+                        <serverId>rdc-release-youforest</serverId>
+                        <nexusUrl>https://packages.aliyun.com/6670f23dfd3acd0ce9014364/maven/2476786-release-x8o41d</nexusUrl>
                         <autoReleaseAfterClose>false</autoReleaseAfterClose>
                     </configuration>
                 </plugin>

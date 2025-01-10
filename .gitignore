@@ -22,3 +22,9 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
+/logs/
+/youforest-boot-dependencies/pom-xml-flattened
+/youforest-boot-db/pom-xml-flattened
+/youforest-base-dependencies/pom-xml-flattened
+/youforest-example/pom-xml-flattened
+/youforest-boot-web/pom-xml-flattened
